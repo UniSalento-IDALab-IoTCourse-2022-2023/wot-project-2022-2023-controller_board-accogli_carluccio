@@ -25,7 +25,7 @@ This node plays an active role in the processing of alarms, as it converts and f
 It also manages secure access to the machine, ensuring that only operators authorized for that working day can connect to the node via BLE and access the proximity alarm system.\
 It is possible to expand the functionalities by adding appropriately configured devices or sensors. Currently, redundant alarm signaling is configured using a passive buzzer, an RGB LED. Moreover an LCD display indicate the BLE connection status.
 
-<b><i style="color: #FF0000">NOTE: </b> the script was tested and developed on a Raspberry Pi 4 Model B with 8 gb of ram. It also uses GPIO.</i>
+🔴 <b><i>NOTE: </b> the script was tested and developed on a Raspberry Pi 4 Model B with 8 gb of ram. It also uses GPIO.</i>
 
 
 ## Usage
