@@ -71,6 +71,11 @@ def led_on_yellow():
     GPIO.output(LED_RED_PIN, GPIO.LOW)
     GPIO.output(LED_GREEN_PIN, GPIO.LOW)
     GPIO.output(LED_BLUE_PIN, GPIO.HIGH)
+
+def led_beep(duration):
+    led_on_red()
+    time.sleep(duration)
+    led_on_green()
 ################################################
 
 

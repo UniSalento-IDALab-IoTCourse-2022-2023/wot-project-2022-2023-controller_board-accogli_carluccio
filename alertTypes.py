@@ -119,11 +119,14 @@ class GeneralAlert:
 
         message_general = {"type": "general", "text": alert.description, "priority":alert.priority.lower()}
         message_queue_dash.put(message_general)
+
+        hwD.buzzer_beep(3)
+        hwD.led_beep(3)
     
     def process_BLE_notification(alert, message_queue:queue.Queue):
         encoded_alarm = create_encoded_alarm(alert)
 
-        message = {"type": alert.type,"info": encoded_alarm, "general": alert.description.encode()}
+        message = {"type": "general","info": encoded_alarm, "general": alert.description.encode()}
         message_queue.put(message)
 ###############################################################################################################
 

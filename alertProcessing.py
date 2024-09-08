@@ -61,6 +61,8 @@ def subscribe_to_alarm_topic(machineryID) -> mqtt.Client:
     client = ConnectionHelper.mqttConnection(machineryID)
     machinery_topic = 'zone/default/machinery/'+machineryID+"/alarms"
     client.subscribe(machinery_topic)
+    general_topic = 'zone/default/machinery/all/alarms'
+    client.subscribe(general_topic)
     client.on_message = on_message
     return client
 
