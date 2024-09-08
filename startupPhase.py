@@ -17,7 +17,8 @@ operator_connected = threading.Event()
 ble_connection = None
 
 # TEST Da cambiare con a variabile locale list_mac_addresses
-WHITELIST = ["e0:dc:ff:f4:3c:1e", "f4:60:e2:c0:2d:9f"]
+#WHITELIST = ["e0:dc:ff:f4:3c:1e", "f4:60:e2:c0:2d:9f", "5F:5D:9A:62:C6:1B"]
+list_mac_addresses = None
 
 
 ##############################################################################################################
@@ -28,7 +29,7 @@ def ble_publish(alert_service: peripheral.Peripheral):
 # Creazione servizio BLE, creazione thread per l'ascolto indipendente degli eventi BLE e start
 def manage_bluetooth(machinery_serial_number) -> threading.Thread:
     global ble_connection
-    ble_connection = ble.service_creation(list(adapter.Adapter.available())[0], WHITELIST, operator_connected, machinery_serial_number)
+    ble_connection = ble.service_creation(list(adapter.Adapter.available())[0], list_mac_addresses, operator_connected, machinery_serial_number)
     ble_events_thread = threading.Thread(target=ble_publish, args=(ble_connection.peripheral_device,))
     ble_events_thread.start()
     return ble_events_thread
@@ -105,9 +106,9 @@ def simulation_processing(client_mqtt):
 def simulation(machinery):
    
     # 1
-    '''if machinery.state != "ACTIVE":
+    if machinery.state != "ACTIVE":
         print(Fore.RED + Style.BRIGHT + f'Macchinario non attivo' + Style.RESET_ALL)
-        return False'''
+        return False
 
     # 2
     hwD.setup()
@@ -115,13 +116,14 @@ def simulation(machinery):
     print(machinery.plate.serial_number)
 
     # 3
-    '''configuration = check_today_configuration(machinery.id)
+    configuration = check_today_configuration(machinery.id)
     if not configuration:
         return False
     
     # 4
+    global list_mac_addresses
     list_mac_addresses = configuration.authMacAddresses
-    print(f'Indirizzi MAC consentiti: {list_mac_addresses}')'''
+    print(f'Indirizzi MAC consentiti: {list_mac_addresses}')
     
     # 5
     signal_waiting_for_connection()
