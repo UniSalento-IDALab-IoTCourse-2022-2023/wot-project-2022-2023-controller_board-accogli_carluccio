@@ -59,7 +59,7 @@ characteristics_value = {
 def is_whitelisted(device:device.Device):
     print(device.address)
 
-    if device.address.casefold() in ble_connection.whitelist:
+    if device.address.casefold() in [a.casefold() for a in ble_connection.whitelist]:
         print("Auth")
         return True
     else:
@@ -80,8 +80,11 @@ def on_connect(ble_device:device.Device):
 
 
 def on_disconnect(adapter_address, device_address):
-    if device_address == None or device_address != ble_connection.device_connected.address or not ble_connection.device_connected:
+    if device_address == None or not ble_connection.device_connected:
         return 
+    
+    if device_address != ble_connection.device_connected.address:
+        return
     
     if ble_connection.event_sync.is_set():
         ble_connection.device_connected = None
